@@ -1,0 +1,31 @@
+<button id="btn" onclick="sendIo();">Hi</button>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  
+  var socket = io.connect('http://localhost:3000',{transports: ['websocket']});
+
+  socket.on('connect', function() {
+    console.log("connected");
+     
+   socket.emit('authenticate', {token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJxd2VydHkiLCJpYXQiOjE0NzEyNzgzNzcsImV4cCI6MTQ3MTI4MTk3N30.wyvcbJW_iASzvKRRVaPAfY8dgGw-xlXiNDRgcW-CdvQ"}); //send the jwt
+
+
+});
+  socket.on('private',function(t){
+    console.log("private"+ t);
+  });
+  function sendIo() {
+    socket.emit('hi');
+
+  }
+  socket.on("unauthorized", function(error, callback) {
+
+    console.log("not auth");
+  if (error.data.type == "UnauthorizedError" || error.data.code == "invalid_token") {
+    // redirect user to login page perhaps or execute callback:
+    callback();
+    console.log("User's token has expired");
+  }
+});
+ 
+</script>
