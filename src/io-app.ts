@@ -51,7 +51,7 @@ clientRedis.get("hosts", (err,result) => {
 
     
 
- 
+  
     //this socket is authenticated, we are good to handle more events from it.
     console.log('hello! ' + socket.id);
   });
